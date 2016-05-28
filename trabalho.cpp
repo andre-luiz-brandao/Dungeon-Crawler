@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <math.h>
+#include "model/entities/Warrior.cpp"
 
 using namespace std;
 
@@ -194,6 +195,7 @@ void idle(){
 }
 void init( void )
 {
+
     glViewport(0,0,ortoSetting,ortoSetting);
 	for(int x = 0; x < 255 ; x++){
 		teclas[x] = 0;
