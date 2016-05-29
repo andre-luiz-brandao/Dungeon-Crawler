@@ -29,6 +29,9 @@ public :
 	void setAngle(int rotacao){
 		this->rotZ = rotacao;
 	}
+	void setLevel(){
+		this->level++;
+	}
 	int getLife(){
 		return this->life;
 	}

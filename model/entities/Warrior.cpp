@@ -1,20 +1,20 @@
-#include "Adventurer.cpp"
+
 
 class Warrior : public Adventurer {
 private :
 	
 public :
 	void levelUp(){
-		this->ataque += 4;
-		this->defesa += 1;
-		this->level++;
+		this->setAtaque(this->getAtaque() + 4);
+		this->setDefesa(this->getDefesa() + 1);
+		this->setLevel();
 	}
 
 	int getAtaque(){
-		return this->ataque + this->itens[itemAtaqueEquipado].getAtaque();
+		return getAtaque() + itens[itemAtaqueEquipado].getAtaque();
 	}
 
 	int getDefesa(){
-		return this->defesa + this->itens[itemDefesaEquipado].getDefesa();
+		return getDefesa() + itens[itemDefesaEquipado].getDefesa();
 	}
 };

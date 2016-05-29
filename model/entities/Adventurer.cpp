@@ -1,12 +1,12 @@
-#include "Entity.cpp"
-#include "../environment/Item.cpp"
-
+//#include "../environment/Item.cpp"
+//#include "Entity.cpp"
 
 class Adventurer : public Entity{
 protected :
-	int itemAtaqueEquipado, itemDefesaEquipado, qntItens;
-	Item itens[10];
+	
 public :
+	Item itens[10];
+	int itemAtaqueEquipado, itemDefesaEquipado, qntItens;
 	void setItemAtaque(int itemAtaque){
 		this->itemAtaqueEquipado = itemAtaque;
 	}

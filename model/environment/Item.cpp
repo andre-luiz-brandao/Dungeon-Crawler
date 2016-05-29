@@ -1,11 +1,11 @@
 
 class Item{
 	private :
-		char* itemName;
+		std::string itemName;
 		int ataque,defesa;
 	public :
 
-		Item(char *nome, int level){
+		Item(std::string nome, int level){
 			this->itemName = nome;
 			this->setAtaque(level*4);
 			this->setDefesa(level*4);
