@@ -1,6 +1,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <math.h>
+#include "control/Control.cpp"
 
 using namespace std;
 
@@ -194,6 +195,8 @@ void idle(){
 }
 void init( void )
 {
+    Item item("SwordOfHell",10);
+    cout << item.getAtaque();
     glViewport(0,0,ortoSetting,ortoSetting);
 	for(int x = 0; x < 255 ; x++){
 		teclas[x] = 0;

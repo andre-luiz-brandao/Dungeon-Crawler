@@ -1,5 +1,5 @@
 
-class Enemy : public Npc {
+class Friendly : public Npc {
 private :
 	
 public :
