@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "../model/environment/Item.cpp"
 #include "../model/entities/Entity.cpp"
 #include "../model/entities/Npc.cpp"
@@ -13,7 +15,31 @@
 
 class Control {
 protected :
-    
+    Adventurer* mainCharacter;
+    std::vector<Monster*> monstersArray;
+    std::vector<Npc*> npcArray;
 public :
-    
+    Adventurer* getMainCharacter() const {
+        return mainCharacter;
+    }
+
+    std::vector<Monster*> getMonstersArray() const {
+        return monstersArray;
+    }
+
+    std::vector<Npc*> getNpcArray() const {
+        return npcArray;
+    }
+
+    void setMainCharacter(Adventurer* mainCharacter) {
+        this->mainCharacter = mainCharacter;
+    }
+
+    void setMonster(Monster* monster) {
+        this->monstersArray.push_back(monster);
+    }
+
+    void setNpc(Npc* npc) {
+        this->npcArray.push_back(npc);
+    }    
 };

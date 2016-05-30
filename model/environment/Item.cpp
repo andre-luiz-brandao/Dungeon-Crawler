@@ -4,7 +4,7 @@ class Item{
 		std::string itemName;
 		int ataque,defesa;
 	public :
-
+            Item();
 		Item(std::string nome, int level){
 			this->itemName = nome;
 			this->setAtaque(level*4);

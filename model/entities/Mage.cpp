@@ -4,16 +4,37 @@ private :
 	
 public :
 	void levelUp(){
-		this->ataque += 2;
-		this->defesa += 2;
-		this->level++;
+		if(this->getXp() >= this->getNextLvl()){
+                this->setAtaque(this->getAtaque() + 2);
+		this->setDefesa(this->getDefesa() + 2);
+		this->setLevel();
+                this->setNextLvl(this->getNextLvl() * 2);
+            }
 	}
 
-	int getAtaque(){
-		return this->ataque + this->itens[itemAtaqueEquipado].getAtaque();
+	int virtual getAtaque(){
+		return this->getAtaque();
 	}
 
-	int getDefesa(){
-		return this->defesa + this->itens[itemDefesaEquipado].getDefesa();
+	int virtual getDefesa(){
+		return this->getDefesa();
 	}
+        
+        void virtual draw(){
+            glPushMatrix();
+            glTranslatef(this->dx,this->dy,0);
+            
+            this->glDraw(this->initDx, this->initDy);
+            glPopMatrix();
+        }
+        
+        void glDraw(int posx, int posy){
+            glColor3f(0.0,0.0,1.0);
+            glBegin(GL_QUADS);
+                glVertex2i(posx,posy);
+                glVertex2i(posx,40);
+                glVertex2i(40,40);
+                glVertex2i(40,posy);
+            glEnd();
+        }
 };

@@ -10,12 +10,13 @@ int mouseEsq = 0, mouseDir = 0;
 int larx=0, alty=0;
 int teclas[255];
 float currentTime=0,timeDifference=0.3,previousTime=0;
-int ortoSetting = 1000;
+int ortoSetting = 50;
 int mousex = 0, mousey = 0;
 int correctionValue = 10;
 int outOfLimits = 0;
 int catchItem = 0;
 int pegarItem = 0;
+Control *globalControl;
 
 void drawItem(int size){
     glPushMatrix();
@@ -102,10 +103,15 @@ void display( void )
     glClear( GL_COLOR_BUFFER_BIT );
     //drawCharacter(0,0,10);
     
-    drawCharacter(40);
-    if(pegarItem != 1){
-         drawItem(20);
+    //drawCharacter(40);
+//    if(pegarItem != 1){
+//         drawItem(20);
+//    }
+    std::vector<Monster *> monsterVector = globalControl->getMonstersArray();
+    for(int count = 0 ; count < monsterVector.size() ; count ++){
+        monsterVector.at(count)->draw();
     }
+    globalControl->getMainCharacter()->draw();
     drawScenario();
     glutSwapBuffers();
     glutPostRedisplay();
@@ -157,17 +163,17 @@ void idle(){
 
     detectColision();
 
-	if(larx > ortoSetting){
-		larx = -ortoSetting;
-	} else if( larx < -ortoSetting){
-		larx = ortoSetting;
-	}
-
-	if(alty > ortoSetting){
-		alty = -ortoSetting;
-	} else if(alty < -ortoSetting){
-		alty = ortoSetting;
-	}
+//	if(larx > ortoSetting){
+//		larx = -ortoSetting;
+//	} else if( larx < -ortoSetting){
+//		larx = ortoSetting;
+//	}
+//
+//	if(alty > ortoSetting){
+//		alty = -ortoSetting;
+//	} else if(alty < -ortoSetting){
+//		alty = ortoSetting;
+//	}
 
     //if(colisionDetected != 1){
         if(teclas['w']){
@@ -185,19 +191,19 @@ void idle(){
             larx += 0.3*timeDifference;
         }
 
-        if(sqrt(pow((larx-500),2) + pow((alty + 500),2)) < 100) {
-            catchItem = 1; 
-        } else { 
-            catchItem = 0;
-        }
+//        if(sqrt(pow((larx-500),2) + pow((alty + 500),2)) < 100) {
+//            catchItem = 1; 
+//        } else { 
+//            catchItem = 0;
+//        }
     //}
-	
+    globalControl->getMainCharacter()->andar(larx,alty);
 }
 void init( void )
 {
-    Item item("SwordOfHell",10);
-    cout << item.getAtaque();
-    glViewport(0,0,ortoSetting,ortoSetting);
+    int proporcaoX = 1000;
+    int proporcaoY = 1000;
+    glViewport(0,0,proporcaoX, proporcaoY);
 	for(int x = 0; x < 255 ; x++){
 		teclas[x] = 0;
 	}
@@ -209,11 +215,34 @@ void init( void )
     //Inicializar sistema de visualizaçao
     glMatrixMode( GL_PROJECTION );
     glLoadIdentity();
-    glOrtho( -ortoSetting, ortoSetting, -ortoSetting, ortoSetting, -200, 200 );
+    glOrtho( -proporcaoX, proporcaoX, -proporcaoY, proporcaoY, -100, 100 );
+    Control *control = new Control();
+    for(int vai = 0; vai < 10 ; vai ++){
+        Monster * monster = new Monster;
+        monster->setAtaque(vai*2);
+        monster->setDefesa(vai*1);
+        monster->setLife(vai*10);
+        monster->setPosicao(vai*45,vai);
+
+        control->setMonster(monster);
+    }
+    int count = 0;
+    std::vector<Monster *> monsterVector = control->getMonstersArray();
+    for(count = 0 ; count < monsterVector.size() ; count ++){
+        cout <<"Monster nº " << count << "Ataque : "<<monsterVector.at(count)->getAtaque() << endl;
+    }
+    
+    Archer * archer = new Archer();
+    control->setMainCharacter(archer);
+    globalControl = control;
 }    
 
 void reshape(int altura, int largura){
     //cout << "altura :" << altura << "largura :" << largura ;
+    //int alt = altura;
+    //int lar = altura * (9/16);
+
+    //glViewport(0,0,alt,lar);
 }
 void keyboardUp(unsigned char teclado, int x, int y){
 	switch (teclado) {
@@ -324,7 +353,7 @@ int main(int argc, char *argv[])
 {
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
-    glutInitWindowSize( 800, 600 );
+    glutInitWindowSize( 1024, 576 );
     glutInitWindowPosition( 250, 250 );
     glutCreateWindow( "Hello" );
     glutDisplayFunc( display );
